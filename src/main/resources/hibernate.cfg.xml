@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <!-- Datos de conexión a la base de datos -->
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/Tamagochi</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">Zeus2023+</property>
+        <!-- Dialecto específico de la base de datos -->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <!-- Mostrar SQL en la consola para fines de depuración -->
+        <property name="show_sql">true</property>
+        <!-- Utilizar anotaciones para mapear entidades -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        
+        <!-- Escaneo de clases con anotaciones para mapear entidades -->
+        <mapping class="com.utadeo.tamagochi.database.entities.Tamagochi" />
+        
+    </session-factory>
+</hibernate-configuration>
