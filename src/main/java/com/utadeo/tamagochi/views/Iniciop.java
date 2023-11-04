@@ -53,10 +53,10 @@ public class Iniciop extends javax.swing.JFrame {
         final TamagochiDAO tamagochiDAO = new TamagochiDAO();
         Tamagochi tamagochi = tamagochiDAO.read(this.idTamagochi);
         
-        hambreJLabel.setText(String.valueOf(tamagochi.getHambre()));
-        bañoJLabel.setText(String.valueOf(tamagochi.getBaño()));
-        juegoJLabel.setText(String.valueOf(tamagochi.getEnergia()));
-        sueñoJLabel.setText(String.valueOf(tamagochi.getSueño()));
+        hambreJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/porcentajes/" + String.valueOf(tamagochi.getHambre())  + ".PNG"))); // NOI18N
+        bañoJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/porcentajes/" + String.valueOf(tamagochi.getBaño())  + ".PNG"))); // NOI18N
+        juegoJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/porcentajes/" + String.valueOf(tamagochi.getEnergia())  + ".PNG"))); // NOI18N
+        sueñoJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/porcentajes/" + String.valueOf(tamagochi.getSueño())  + ".PNG"))); // NOI18N
         
         nombreJLabel.setText(tamagochi.getNombre());
         
