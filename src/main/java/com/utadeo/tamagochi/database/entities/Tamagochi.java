@@ -16,7 +16,7 @@ import javax.persistence.Id;
 public class Tamagochi {
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long id;
 
     private String nombre;
     private String tipo;
@@ -31,7 +31,7 @@ public class Tamagochi {
     }
 
     // Getters
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -76,7 +76,7 @@ public class Tamagochi {
     }
 
     // Setters
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

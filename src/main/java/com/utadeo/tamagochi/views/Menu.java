@@ -4,6 +4,10 @@
  */
 package com.utadeo.tamagochi.views;
 
+import com.utadeo.tamagochi.database.daos.TamagochiDAO;
+import com.utadeo.tamagochi.database.entities.Tamagochi;
+import java.util.List;
+
 
 
 /**
@@ -97,8 +101,22 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BJUGARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BJUGARActionPerformed
-        Mascota newframe = new Mascota();
-        newframe.setVisible(true);
+
+                final TamagochiDAO tamagochiDAO = new TamagochiDAO();
+                List<Tamagochi> tamagochis = tamagochiDAO.getAll();
+                
+                if (tamagochis.size()== 0){ 
+                    Mascota newframe = new Mascota();
+                    newframe.setVisible(true);
+                }else{
+                    Iniciop nuevaVentana = new Iniciop();
+                    nuevaVentana.setIdTamagochi(tamagochis.get(0).getId());
+                    nuevaVentana.loadTamagochi();
+                    nuevaVentana.setVisible(true);
+                }
+
+                
+              
        
         this.dispose();
     }//GEN-LAST:event_BJUGARActionPerformed

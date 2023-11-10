@@ -53,6 +53,11 @@ public class Nombrem extends javax.swing.JFrame {
 
         nameJTextField.setBackground(new java.awt.Color(255, 255, 255));
         nameJTextField.setFont(new java.awt.Font("Arial", 2, 36)); // NOI18N
+        nameJTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameJTextFieldActionPerformed(evt);
+            }
+        });
         nameJTextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 nameJTextFieldKeyPressed(evt);
@@ -100,6 +105,10 @@ public class Nombrem extends javax.swing.JFrame {
  
 
     }//GEN-LAST:event_nameJTextFieldKeyPressed
+
+    private void nameJTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameJTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nameJTextFieldActionPerformed
 
    
 

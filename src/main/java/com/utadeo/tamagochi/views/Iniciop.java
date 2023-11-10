@@ -7,6 +7,8 @@ package com.utadeo.tamagochi.views;
 import com.utadeo.tamagochi.database.daos.TamagochiDAO;
 import com.utadeo.tamagochi.database.entities.Tamagochi;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.SwingConstants;
 
 /**
@@ -15,7 +17,8 @@ import javax.swing.SwingConstants;
  */
 public class Iniciop extends javax.swing.JFrame {
     
-    private Integer idTamagochi; 
+    private Long idTamagochi; 
+    private Tamagochi tamagochi;
 
     /**
      * Creates new form Iniciop
@@ -51,7 +54,7 @@ public class Iniciop extends javax.swing.JFrame {
     public void loadTamagochi(){
         
         final TamagochiDAO tamagochiDAO = new TamagochiDAO();
-        Tamagochi tamagochi = tamagochiDAO.read(this.idTamagochi);
+        tamagochi = tamagochiDAO.read(this.idTamagochi);
         
         hambreJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/porcentajes/" + String.valueOf(tamagochi.getHambre())  + ".PNG"))); // NOI18N
         bañoJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/porcentajes/" + String.valueOf(tamagochi.getBaño())  + ".PNG"))); // NOI18N
@@ -60,13 +63,58 @@ public class Iniciop extends javax.swing.JFrame {
         
         nombreJLabel.setText(tamagochi.getNombre());
         
+       
         if (tamagochi.getTipo().compareTo("PA")==0){
-          jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/FI_PANDA.PNG"))); // NOI18N  
+          jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondos/panda/panda_i.PNG"))); // NOI18N
+          tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_feliz.PNG"))); // NOI18N
         }else if (tamagochi.getTipo().compareTo("PI")==0){
-            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fi_pinguino.PNG"))); // NOI18N
+            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondos/pinguino/pinguino_i.PNG"))); // NOI18N
+            tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pinguino_feliz.PNG"))); // NOI18N
         }
         
+        ActionListener porcentajesListener = new ActionListener()
+        {
+            public void actionPerformed(ActionEvent event)
+            {
+               loadTamagochiPorcentajes();             
+            }
+        };
+        javax.swing.Timer timerPorcentajes = new javax.swing.Timer(1000, porcentajesListener);// mil milisegundos
+        timerPorcentajes.setInitialDelay(0);
+        timerPorcentajes.start();
         
+        ActionListener bañoListener = new ActionListener()
+        {
+            public void actionPerformed(ActionEvent event)
+            {
+              updateBaño();       
+            }
+        };
+        javax.swing.Timer timerBaño = new javax.swing.Timer(3000, bañoListener);// mil milisegundos
+        timerBaño.setInitialDelay(0);
+        timerBaño.start();
+    }
+    
+    private void updateBaño() {
+        final TamagochiDAO tamagochiDAO = new TamagochiDAO();
+        if(tamagochi.getBaño()==0){
+            tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_muerto.PNG"))); // NOI18N
+        }else{
+            
+            tamagochi.setBaño(tamagochi.getBaño()-10);
+            tamagochiDAO.update(tamagochi);
+            
+        }
+    }
+    
+    private void loadTamagochiPorcentajes(){
+        final TamagochiDAO tamagochiDAO = new TamagochiDAO();
+        tamagochi = tamagochiDAO.read(this.idTamagochi);
+        
+        hambreJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/porcentajes/" + String.valueOf(tamagochi.getHambre())  + ".PNG"))); // NOI18N
+        bañoJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/porcentajes/" + String.valueOf(tamagochi.getBaño())  + ".PNG"))); // NOI18N
+        juegoJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/porcentajes/" + String.valueOf(tamagochi.getEnergia())  + ".PNG"))); // NOI18N
+        sueñoJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/porcentajes/" + String.valueOf(tamagochi.getSueño())  + ".PNG"))); // NOI18N
     }
 
     /**
@@ -80,14 +128,15 @@ public class Iniciop extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         nombreJLabel = new javax.swing.JLabel();
-        hambreJLabel = new javax.swing.JLabel("The Label", SwingConstants.CENTER);
-        sueñoJLabel = new javax.swing.JLabel("The Label", SwingConstants.CENTER);
-        bañoJLabel = new javax.swing.JLabel("The Label", SwingConstants.CENTER);
-        juegoJLabel = new javax.swing.JLabel("The Label", SwingConstants.CENTER);
+        hambreJLabel = new javax.swing.JLabel("", SwingConstants.CENTER);
+        sueñoJLabel = new javax.swing.JLabel("", SwingConstants.CENTER);
+        bañoJLabel = new javax.swing.JLabel("", SwingConstants.CENTER);
+        juegoJLabel = new javax.swing.JLabel("", SwingConstants.CENTER);
         BCOMIDA = new javax.swing.JButton();
         BDORMIR = new javax.swing.JButton();
         BBAÑO = new javax.swing.JButton();
         BJUEGOS = new javax.swing.JButton();
+        tamagochiJLabel = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -107,23 +156,19 @@ public class Iniciop extends javax.swing.JFrame {
 
         hambreJLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         hambreJLabel.setForeground(new java.awt.Color(0, 0, 0));
-        hambreJLabel.setText("jLabel3");
-        jPanel2.add(hambreJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 560, 110, 60));
+        jPanel2.add(hambreJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 540, 110, 80));
 
         sueñoJLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         sueñoJLabel.setForeground(new java.awt.Color(0, 0, 0));
-        sueñoJLabel.setText("jLabel2");
-        jPanel2.add(sueñoJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 550, 120, 80));
+        jPanel2.add(sueñoJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 540, 100, 90));
 
         bañoJLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         bañoJLabel.setForeground(new java.awt.Color(0, 0, 0));
-        bañoJLabel.setText("jLabel4");
-        jPanel2.add(bañoJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 570, 100, 50));
+        jPanel2.add(bañoJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 550, 120, 80));
 
         juegoJLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         juegoJLabel.setForeground(new java.awt.Color(0, 0, 0));
-        juegoJLabel.setText("jLabel5");
-        jPanel2.add(juegoJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 570, 110, 50));
+        jPanel2.add(juegoJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 550, 120, 80));
 
         BCOMIDA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BCOMIDAULTIMO.PNG"))); // NOI18N
         BCOMIDA.addActionListener(new java.awt.event.ActionListener() {
@@ -131,19 +176,37 @@ public class Iniciop extends javax.swing.JFrame {
                 BCOMIDAActionPerformed(evt);
             }
         });
-        jPanel2.add(BCOMIDA, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 610, 80, 90));
+        jPanel2.add(BCOMIDA, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 610, 80, 80));
 
         BDORMIR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BDORMIR3.PNG"))); // NOI18N
-        jPanel2.add(BDORMIR, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 610, 80, 80));
+        BDORMIR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BDORMIRActionPerformed(evt);
+            }
+        });
+        jPanel2.add(BDORMIR, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 610, 80, 80));
 
         BBAÑO.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BBAÑO3.PNG"))); // NOI18N
-        jPanel2.add(BBAÑO, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 610, 80, 80));
+        BBAÑO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BBAÑOActionPerformed(evt);
+            }
+        });
+        jPanel2.add(BBAÑO, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 610, 80, 80));
 
         BJUEGOS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BJUEGOS.PNG"))); // NOI18N
-        jPanel2.add(BJUEGOS, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 610, 80, 80));
+        BJUEGOS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BJUEGOSActionPerformed(evt);
+            }
+        });
+        jPanel2.add(BJUEGOS, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 610, 80, 80));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/FI_PANDA.PNG"))); // NOI18N
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, 700));
+        tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_feliz.png"))); // NOI18N
+        jPanel2.add(tamagochiJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 280, 340));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondos/panda/panda_i.PNG"))); // NOI18N
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 700));
 
         jLabel3.setText("jLabel3");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 560, -1, -1));
@@ -155,13 +218,43 @@ public class Iniciop extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BCOMIDAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BCOMIDAActionPerformed
-        pa_cocina newframe = new pa_cocina();
-        newframe.setVisible(true);
+        
+        if (tamagochi.getTipo().compareTo("PA")==0){
+            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondos/panda/cocina_p.PNG"))); // NOI18N
+        } else{
+            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondos/pinguino/pinguino_c.PNG"))); // NOI18N
+        }
+    
+
        
-        this.dispose();
+      
     }//GEN-LAST:event_BCOMIDAActionPerformed
 
-    public void setIdTamagochi(Integer idTamagochi) {
+    private void BBAÑOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BBAÑOActionPerformed
+        if (tamagochi.getTipo().compareTo("PA")==0){
+            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondos/panda/panda_b.PNG"))); // NOI18N
+        } else{
+            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondos/pinguino/pinguino_b.PNG"))); // NOI18N
+        }
+    }//GEN-LAST:event_BBAÑOActionPerformed
+
+    private void BDORMIRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BDORMIRActionPerformed
+        if (tamagochi.getTipo().compareTo("PA")==0){
+            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondos/panda/panda_c.PNG"))); // NOI18N
+        } else{
+            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondos/pinguino/pinguino_p.PNG"))); // NOI18N
+        }
+    }//GEN-LAST:event_BDORMIRActionPerformed
+
+    private void BJUEGOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BJUEGOSActionPerformed
+        if (tamagochi.getTipo().compareTo("PA")==0){
+            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondos/panda/panda_i.PNG"))); // NOI18N
+        } else{
+            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondos/pinguino/pinguino_i.PNG"))); // NOI18N
+        }
+    }//GEN-LAST:event_BJUEGOSActionPerformed
+
+    public void setIdTamagochi(Long idTamagochi) {
         this.idTamagochi = idTamagochi;
     }
 
@@ -181,5 +274,6 @@ public class Iniciop extends javax.swing.JFrame {
     private javax.swing.JLabel juegoJLabel;
     private javax.swing.JLabel nombreJLabel;
     private javax.swing.JLabel sueñoJLabel;
+    private javax.swing.JLabel tamagochiJLabel;
     // End of variables declaration//GEN-END:variables
 }

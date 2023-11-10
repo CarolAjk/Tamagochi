@@ -9,6 +9,12 @@ import org.hibernate.Session;
 import com.utadeo.tamagochi.database.entities.Tamagochi;
       
 import com.utadeo.tamagochi.database.HibernateUtil;
+
+import java.math.BigInteger;
+import java.util.List;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import org.hibernate.Criteria;
 /**
  *
  * @author USUARIO
@@ -22,12 +28,30 @@ public class TamagochiDAO {
         session.save(tamagochi);
         session.getTransaction().commit();
     }
+    
+    public List<Tamagochi> getAll(){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(Tamagochi.class);
+        
+        session.getTransaction().commit();
+        return criteria.list();
+    }
+    
+    public Long readLetestId(){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Long lastId = ((BigInteger) session.createSQLQuery("SELECT LAST_INSERT_ID()").uniqueResult()).longValue();
+        session.getTransaction().commit();
+        return lastId;
+    }
 
+    
     public void update(Tamagochi tamagochi) {
         System.out.println("Maven + Hibernate + MySQL");
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        session.save(tamagochi);
+        session.update(tamagochi);
         session.getTransaction().commit();
     }
 
@@ -40,7 +64,7 @@ public class TamagochiDAO {
         session.getTransaction().commit();
     }
 
-    public Tamagochi read(Integer id) {
+    public Tamagochi read(Long id) {
         System.out.println("Maven + Hibernate + MySQL");
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
