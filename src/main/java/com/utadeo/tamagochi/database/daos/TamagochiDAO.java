@@ -137,7 +137,7 @@ public class TamagochiDAO {
         session.getTransaction().commit();
     }
     
-    public void feed(Integer id) throws Exception {
+    public void feed(Long id) throws Exception {
         
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();

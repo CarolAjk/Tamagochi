@@ -9,6 +9,8 @@ import com.utadeo.tamagochi.database.entities.Tamagochi;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.SwingConstants;
 
 /**
@@ -47,7 +49,8 @@ public class Iniciop extends javax.swing.JFrame {
         bañoJLabel.setBackground(Color.white);
         bañoJLabel.setOpaque(false);
         
-        
+     comidaDerechaJLabel.setVisible(false);
+     comidaIzquierdaJLabel.setVisible(false);
         
     }
     
@@ -129,6 +132,8 @@ public class Iniciop extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         nombreJLabel = new javax.swing.JLabel();
         hambreJLabel = new javax.swing.JLabel("", SwingConstants.CENTER);
+        comidaDerechaJLabel = new javax.swing.JLabel();
+        comidaIzquierdaJLabel = new javax.swing.JLabel();
         sueñoJLabel = new javax.swing.JLabel("", SwingConstants.CENTER);
         bañoJLabel = new javax.swing.JLabel("", SwingConstants.CENTER);
         juegoJLabel = new javax.swing.JLabel("", SwingConstants.CENTER);
@@ -138,8 +143,8 @@ public class Iniciop extends javax.swing.JFrame {
         BJUEGOS = new javax.swing.JButton();
         tamagochiJLabel = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("INICIO PANDA-PINGUINO");
@@ -149,25 +154,38 @@ public class Iniciop extends javax.swing.JFrame {
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         nombreJLabel.setFont(new java.awt.Font("Arial", 3, 48)); // NOI18N
-        nombreJLabel.setForeground(new java.awt.Color(0, 0, 0));
         nombreJLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         nombreJLabel.setText("jLabel2");
         jPanel2.add(nombreJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 30, 290, 70));
 
         hambreJLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        hambreJLabel.setForeground(new java.awt.Color(0, 0, 0));
         jPanel2.add(hambreJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 540, 110, 80));
 
+        comidaDerechaJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_tacos.png"))); // NOI18N
+        comidaDerechaJLabel.setText("jLabel3");
+        comidaDerechaJLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                comidaDerechaJLabelMouseClicked(evt);
+            }
+        });
+        jPanel2.add(comidaDerechaJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 450, 90, 140));
+
+        comidaIzquierdaJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_bambu.png"))); // NOI18N
+        comidaIzquierdaJLabel.setText("jLabel3");
+        comidaIzquierdaJLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                comidaIzquierdaJLabelMouseClicked(evt);
+            }
+        });
+        jPanel2.add(comidaIzquierdaJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 480, 100, 60));
+
         sueñoJLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        sueñoJLabel.setForeground(new java.awt.Color(0, 0, 0));
         jPanel2.add(sueñoJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 540, 100, 90));
 
         bañoJLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        bañoJLabel.setForeground(new java.awt.Color(0, 0, 0));
         jPanel2.add(bañoJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 550, 120, 80));
 
         juegoJLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        juegoJLabel.setForeground(new java.awt.Color(0, 0, 0));
         jPanel2.add(juegoJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 550, 120, 80));
 
         BCOMIDA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BCOMIDA.PNG"))); // NOI18N
@@ -207,10 +225,10 @@ public class Iniciop extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondos/panda/panda_i.PNG"))); // NOI18N
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 700));
-
-        jLabel3.setText("jLabel3");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 560, -1, -1));
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 120, -1, -1));
+
+        jLabel2.setText("jLabel2");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 466, -1, 50));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -218,10 +236,15 @@ public class Iniciop extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BCOMIDAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BCOMIDAActionPerformed
-        
+             comidaIzquierdaJLabel.setVisible(true);
+             comidaDerechaJLabel.setVisible(true);
         if (tamagochi.getTipo().compareTo("PA")==0){
+            comidaDerechaJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_tacos.PNG"))); // NOI18N
+            comidaIzquierdaJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_bambu.PNG"))); // NOI18N
             jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondos/panda/cocina_p.PNG"))); // NOI18N
         } else{
+            comidaDerechaJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_tacos.PNG"))); // NOI18N
+            comidaIzquierdaJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_bambu.PNG"))); // NOI18N
             jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondos/pinguino/pinguino_c.PNG"))); // NOI18N
         }
     
@@ -231,6 +254,9 @@ public class Iniciop extends javax.swing.JFrame {
     }//GEN-LAST:event_BCOMIDAActionPerformed
 
     private void BBAÑOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BBAÑOActionPerformed
+        comidaIzquierdaJLabel.setVisible(false);
+        comidaDerechaJLabel.setVisible(false);
+        
         if (tamagochi.getTipo().compareTo("PA")==0){
             jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondos/panda/panda_b.PNG"))); // NOI18N
         } else{
@@ -239,6 +265,9 @@ public class Iniciop extends javax.swing.JFrame {
     }//GEN-LAST:event_BBAÑOActionPerformed
 
     private void BDORMIRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BDORMIRActionPerformed
+        comidaIzquierdaJLabel.setVisible(false);
+             comidaDerechaJLabel.setVisible(false);
+        
         if (tamagochi.getTipo().compareTo("PA")==0){
             jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondos/panda/panda_c.PNG"))); // NOI18N
         } else{
@@ -247,12 +276,39 @@ public class Iniciop extends javax.swing.JFrame {
     }//GEN-LAST:event_BDORMIRActionPerformed
 
     private void BJUEGOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BJUEGOSActionPerformed
+        comidaIzquierdaJLabel.setVisible(false);
+             comidaDerechaJLabel.setVisible(false);
+        
         if (tamagochi.getTipo().compareTo("PA")==0){
             jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondos/panda/panda_i.PNG"))); // NOI18N
         } else{
             jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondos/pinguino/pinguino_i.PNG"))); // NOI18N
         }
     }//GEN-LAST:event_BJUEGOSActionPerformed
+
+    private void comidaDerechaJLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comidaDerechaJLabelMouseClicked
+
+        TamagochiDAO tamagochiDAO = new TamagochiDAO();
+        try {
+            tamagochiDAO.feed(this.idTamagochi);
+        } catch (Exception ex) {
+            Logger.getLogger(Iniciop.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_comidaDerechaJLabelMouseClicked
+
+    private void comidaIzquierdaJLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comidaIzquierdaJLabelMouseClicked
+    TamagochiDAO tamagochiDAO = new TamagochiDAO();
+        try {
+            tamagochiDAO.feed(this.idTamagochi);
+        } catch (Exception ex) {
+            Logger.getLogger(Iniciop.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_comidaIzquierdaJLabelMouseClicked
 
     public void setIdTamagochi(Long idTamagochi) {
         this.idTamagochi = idTamagochi;
@@ -266,9 +322,11 @@ public class Iniciop extends javax.swing.JFrame {
     private javax.swing.JButton BDORMIR;
     private javax.swing.JButton BJUEGOS;
     private javax.swing.JLabel bañoJLabel;
+    private javax.swing.JLabel comidaDerechaJLabel;
+    private javax.swing.JLabel comidaIzquierdaJLabel;
     private javax.swing.JLabel hambreJLabel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel juegoJLabel;
