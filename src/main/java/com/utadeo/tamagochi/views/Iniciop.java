@@ -170,7 +170,7 @@ public class Iniciop extends javax.swing.JFrame {
         juegoJLabel.setForeground(new java.awt.Color(0, 0, 0));
         jPanel2.add(juegoJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 550, 120, 80));
 
-        BCOMIDA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BCOMIDAULTIMO.PNG"))); // NOI18N
+        BCOMIDA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BCOMIDA.PNG"))); // NOI18N
         BCOMIDA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BCOMIDAActionPerformed(evt);
