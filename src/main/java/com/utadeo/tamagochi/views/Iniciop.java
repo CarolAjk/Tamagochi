@@ -159,31 +159,29 @@ public class Iniciop extends javax.swing.JFrame {
         jPanel2.add(nombreJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 30, 290, 70));
 
         hambreJLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jPanel2.add(hambreJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 540, 110, 80));
+        jPanel2.add(hambreJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 540, 110, 80));
 
         comidaDerechaJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_tacos.png"))); // NOI18N
-        comidaDerechaJLabel.setText("jLabel3");
         comidaDerechaJLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 comidaDerechaJLabelMouseClicked(evt);
             }
         });
-        jPanel2.add(comidaDerechaJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 450, 90, 140));
+        jPanel2.add(comidaDerechaJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 380, 150, 140));
 
         comidaIzquierdaJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_bambu.png"))); // NOI18N
-        comidaIzquierdaJLabel.setText("jLabel3");
         comidaIzquierdaJLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 comidaIzquierdaJLabelMouseClicked(evt);
             }
         });
-        jPanel2.add(comidaIzquierdaJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 480, 100, 60));
+        jPanel2.add(comidaIzquierdaJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, 170, 110));
 
         sueñoJLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jPanel2.add(sueñoJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 540, 100, 90));
+        jPanel2.add(sueñoJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 540, 100, 90));
 
         bañoJLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jPanel2.add(bañoJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 550, 120, 80));
+        jPanel2.add(bañoJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 540, 120, 80));
 
         juegoJLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jPanel2.add(juegoJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 550, 120, 80));
@@ -221,7 +219,7 @@ public class Iniciop extends javax.swing.JFrame {
         jPanel2.add(BJUEGOS, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 610, 80, 80));
 
         tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_feliz.png"))); // NOI18N
-        jPanel2.add(tamagochiJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 280, 340));
+        jPanel2.add(tamagochiJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 430, 440));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondos/panda/panda_i.PNG"))); // NOI18N
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 700));
