@@ -22,6 +22,7 @@ public class Tamagochi {
     private String tipo;
     private Integer baño;
     private Integer sueño;
+    private Boolean dormido=false;
     private Boolean muerte;
     private Integer hambre;
     private Integer energia;
@@ -68,8 +69,13 @@ public class Tamagochi {
         this.muerte = muerte;
     }
 
+    public Boolean getDormido() {
+        return dormido;
+    }
 
-
+    public void setDormido(Boolean dormido) {
+        this.dormido = dormido;
+    }
     
     public Integer getEnergia() {
         return energia;
@@ -79,9 +85,7 @@ public class Tamagochi {
     public void setId(Long id) {
         this.id = id;
     }
-
-
-
+    
     public void setSueño(Integer sueño) {
         this.sueño = sueño;
     }

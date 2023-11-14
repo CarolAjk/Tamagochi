@@ -48,10 +48,10 @@ public class Iniciop extends javax.swing.JFrame {
         
         bañoJLabel.setBackground(Color.white);
         bañoJLabel.setOpaque(false);
-        
-     comidaDerechaJLabel.setVisible(false);
-     comidaIzquierdaJLabel.setVisible(false);
-        
+        comidaDerechaJLabel.setVisible(false);
+        comidaIzquierdaJLabel.setVisible(false);
+        lamparapaJLabel.setVisible(false);
+        xboxJLabel.setVisible(false);
     }
     
     public void loadTamagochi(){
@@ -93,18 +93,116 @@ public class Iniciop extends javax.swing.JFrame {
               updateBaño();       
             }
         };
-        javax.swing.Timer timerBaño = new javax.swing.Timer(3000, bañoListener);// mil milisegundos
+        javax.swing.Timer timerBaño = new javax.swing.Timer(60000, bañoListener);// mil milisegundos
         timerBaño.setInitialDelay(0);
         timerBaño.start();
+        
+         ActionListener comidaListener = new ActionListener()
+        {
+            public void actionPerformed(ActionEvent event)
+            {
+              updateComida();     
+            }
+        };
+        javax.swing.Timer timerComida = new javax.swing.Timer(60000, comidaListener);// mil milisegundos
+        timerComida.setInitialDelay(0);
+        timerComida.start();
+        
+        ActionListener sueñoListener = new ActionListener()
+        {
+            public void actionPerformed(ActionEvent event)
+            {
+              updateSueño();     
+            }
+        };
+        javax.swing.Timer timerSueño = new javax.swing.Timer(6000, sueñoListener);// mil milisegundos
+        timerSueño.setInitialDelay(0);
+        timerSueño.start();  
+        
+        ActionListener energiaListener = new ActionListener()
+        {
+            public void actionPerformed(ActionEvent event)
+            {
+              updateEnergia();     
+            }
+        };
+        javax.swing.Timer timerEnergia = new javax.swing.Timer(6000, energiaListener);// mil milisegundos
+        timerEnergia.setInitialDelay(0);
+        timerEnergia.start();
     }
     
     private void updateBaño() {
         final TamagochiDAO tamagochiDAO = new TamagochiDAO();
         if(tamagochi.getBaño()==0){
-            tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_muerto.PNG"))); // NOI18N
+            if (tamagochi.getTipo().compareTo("PA")==0){
+                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_muerto.PNG"))); // NOI18N
+            }else if (tamagochi.getTipo().compareTo("PI")==0){
+                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pinguino_muerto.PNG"))); // NOI18N
+            }
+            
         }else{
             
             tamagochi.setBaño(tamagochi.getBaño()-10);
+            tamagochiDAO.update(tamagochi);
+            
+        }
+    }
+    
+    private void updateEnergia() {
+        final TamagochiDAO tamagochiDAO = new TamagochiDAO();
+        if(tamagochi.getEnergia()==0){
+            if (tamagochi.getTipo().compareTo("PA")==0){
+               tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_muerto.PNG"))); // NOI18N
+            }else if (tamagochi.getTipo().compareTo("PI")==0){
+                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pinguino_muerto.PNG"))); // NOI18N
+            }
+           
+        }else{
+            
+            tamagochi.setEnergia(tamagochi.getEnergia()-10);
+            tamagochiDAO.update(tamagochi);
+            
+        }
+    }
+    
+    private void updateSueño() {
+        final TamagochiDAO tamagochiDAO = new TamagochiDAO();
+        tamagochi = tamagochiDAO.read(idTamagochi);
+        if (tamagochi.getDormido()){
+            if (tamagochi.getSueño()==100){
+            } else {
+                tamagochi.setSueño(tamagochi.getSueño()+10);
+                tamagochiDAO.update(tamagochi);
+              
+            }
+        } else {
+          if(tamagochi.getSueño()==0){
+              if (tamagochi.getTipo().compareTo("PA")==0){
+                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_muerto.PNG"))); // NOI18N
+            }else if (tamagochi.getTipo().compareTo("PI")==0){
+                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pinguino_muerto.PNG"))); // NOI18N
+            }
+            
+          } else{
+            tamagochi.setSueño(tamagochi.getSueño()-10);
+            tamagochiDAO.update(tamagochi);
+          }  
+        }
+    }
+   
+    
+    private void updateComida() {
+        final TamagochiDAO tamagochiDAO = new TamagochiDAO();
+        if(tamagochi.getHambre()==0){
+            if (tamagochi.getTipo().compareTo("PA")==0){
+               tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_muerto.PNG"))); // NOI18N
+            }else if (tamagochi.getTipo().compareTo("PI")==0){
+               tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pinguino_muerto.PNG"))); // NOI18N
+            }
+            
+        }else{
+            
+            tamagochi.setHambre(tamagochi.getHambre()-10);
             tamagochiDAO.update(tamagochi);
             
         }
@@ -132,19 +230,20 @@ public class Iniciop extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         nombreJLabel = new javax.swing.JLabel();
         hambreJLabel = new javax.swing.JLabel("", SwingConstants.CENTER);
+        lamparapaJLabel = new javax.swing.JLabel();
         comidaDerechaJLabel = new javax.swing.JLabel();
         comidaIzquierdaJLabel = new javax.swing.JLabel();
         sueñoJLabel = new javax.swing.JLabel("", SwingConstants.CENTER);
         bañoJLabel = new javax.swing.JLabel("", SwingConstants.CENTER);
         juegoJLabel = new javax.swing.JLabel("", SwingConstants.CENTER);
         BCOMIDA = new javax.swing.JButton();
+        xboxJLabel = new javax.swing.JLabel();
         BDORMIR = new javax.swing.JButton();
         BBAÑO = new javax.swing.JButton();
         BJUEGOS = new javax.swing.JButton();
         tamagochiJLabel = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("INICIO PANDA-PINGUINO");
@@ -160,6 +259,15 @@ public class Iniciop extends javax.swing.JFrame {
 
         hambreJLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jPanel2.add(hambreJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 540, 110, 80));
+
+        lamparapaJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_lampara.png"))); // NOI18N
+        lamparapaJLabel.setText("jLabel2");
+        lamparapaJLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lamparapaJLabelMouseClicked(evt);
+            }
+        });
+        jPanel2.add(lamparapaJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 420, 410));
 
         comidaDerechaJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_tacos.png"))); // NOI18N
         comidaDerechaJLabel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -194,6 +302,15 @@ public class Iniciop extends javax.swing.JFrame {
         });
         jPanel2.add(BCOMIDA, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 610, 80, 80));
 
+        xboxJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/xbox.png"))); // NOI18N
+        xboxJLabel.setText("jLabel2");
+        xboxJLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                xboxJLabelMouseClicked(evt);
+            }
+        });
+        jPanel2.add(xboxJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 190, 90));
+
         BDORMIR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BDORMIR3.PNG"))); // NOI18N
         BDORMIR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -225,24 +342,24 @@ public class Iniciop extends javax.swing.JFrame {
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 700));
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 120, -1, -1));
 
-        jLabel2.setText("jLabel2");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 466, -1, 50));
-
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void BCOMIDAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BCOMIDAActionPerformed
-             comidaIzquierdaJLabel.setVisible(true);
-             comidaDerechaJLabel.setVisible(true);
+        comidaIzquierdaJLabel.setVisible(true);
+        comidaDerechaJLabel.setVisible(true);
+        lamparapaJLabel.setVisible(false);
+        xboxJLabel.setVisible(false);
+        
         if (tamagochi.getTipo().compareTo("PA")==0){
             comidaDerechaJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_tacos.PNG"))); // NOI18N
             comidaIzquierdaJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_bambu.PNG"))); // NOI18N
             jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondos/panda/cocina_p.PNG"))); // NOI18N
         } else{
-            comidaDerechaJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_tacos.PNG"))); // NOI18N
-            comidaIzquierdaJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_bambu.PNG"))); // NOI18N
+            comidaDerechaJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pinguino_tamales.PNG"))); // NOI18N
+            comidaIzquierdaJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pinguino_pez.PNG"))); // NOI18N
             jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondos/pinguino/pinguino_c.PNG"))); // NOI18N
         }
     
@@ -254,6 +371,8 @@ public class Iniciop extends javax.swing.JFrame {
     private void BBAÑOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BBAÑOActionPerformed
         comidaIzquierdaJLabel.setVisible(false);
         comidaDerechaJLabel.setVisible(false);
+        lamparapaJLabel.setVisible(false);
+        xboxJLabel.setVisible(false);
         
         if (tamagochi.getTipo().compareTo("PA")==0){
             jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondos/panda/panda_b.PNG"))); // NOI18N
@@ -264,7 +383,9 @@ public class Iniciop extends javax.swing.JFrame {
 
     private void BDORMIRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BDORMIRActionPerformed
         comidaIzquierdaJLabel.setVisible(false);
-             comidaDerechaJLabel.setVisible(false);
+        comidaDerechaJLabel.setVisible(false);
+        lamparapaJLabel.setVisible(true);
+        xboxJLabel.setVisible(false);
         
         if (tamagochi.getTipo().compareTo("PA")==0){
             jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondos/panda/panda_c.PNG"))); // NOI18N
@@ -275,7 +396,9 @@ public class Iniciop extends javax.swing.JFrame {
 
     private void BJUEGOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BJUEGOSActionPerformed
         comidaIzquierdaJLabel.setVisible(false);
-             comidaDerechaJLabel.setVisible(false);
+        comidaDerechaJLabel.setVisible(false);
+        lamparapaJLabel.setVisible(false);
+        xboxJLabel.setVisible(true);
         
         if (tamagochi.getTipo().compareTo("PA")==0){
             jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondos/panda/panda_i.PNG"))); // NOI18N
@@ -293,10 +416,6 @@ public class Iniciop extends javax.swing.JFrame {
             Logger.getLogger(Iniciop.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        
-        
-        
-        
     }//GEN-LAST:event_comidaDerechaJLabelMouseClicked
 
     private void comidaIzquierdaJLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comidaIzquierdaJLabelMouseClicked
@@ -307,6 +426,42 @@ public class Iniciop extends javax.swing.JFrame {
             Logger.getLogger(Iniciop.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_comidaIzquierdaJLabelMouseClicked
+
+    private void lamparapaJLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lamparapaJLabelMouseClicked
+       TamagochiDAO tamagochiDAO = new TamagochiDAO();
+        try {
+            if (tamagochi.getDormido()){
+                tamagochiDAO.sleep(this.idTamagochi,false);
+                if (tamagochi.getTipo().compareTo("PA")==0){
+                   tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_feliz.PNG"))); // NOI18N
+                }else if (tamagochi.getTipo().compareTo("PI")==0){
+                   tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pinguino_feliz.PNG"))); // NOI18N
+                }
+                 
+            } else {
+                tamagochiDAO.sleep(this.idTamagochi,true);
+                if (tamagochi.getTipo().compareTo("PA")==0){
+                  tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_dormir.PNG"))); // NOI18N
+                }else if (tamagochi.getTipo().compareTo("PI")==0){
+                  tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pinguino_dormir.PNG"))); // NOI18N
+                }
+                 
+            }
+            
+        } catch (Exception ex) {
+            Logger.getLogger(Iniciop.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }//GEN-LAST:event_lamparapaJLabelMouseClicked
+
+    private void xboxJLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_xboxJLabelMouseClicked
+        TamagochiDAO tamagochiDAO = new TamagochiDAO();
+        try {
+             tamagochiDAO.sumaEnergia(this.idTamagochi);
+            
+        } catch (Exception ex) {
+            Logger.getLogger(Iniciop.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }//GEN-LAST:event_xboxJLabelMouseClicked
 
     public void setIdTamagochi(Long idTamagochi) {
         this.idTamagochi = idTamagochi;
@@ -324,12 +479,13 @@ public class Iniciop extends javax.swing.JFrame {
     private javax.swing.JLabel comidaIzquierdaJLabel;
     private javax.swing.JLabel hambreJLabel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel juegoJLabel;
+    private javax.swing.JLabel lamparapaJLabel;
     private javax.swing.JLabel nombreJLabel;
     private javax.swing.JLabel sueñoJLabel;
     private javax.swing.JLabel tamagochiJLabel;
+    private javax.swing.JLabel xboxJLabel;
     // End of variables declaration//GEN-END:variables
 }

@@ -95,7 +95,7 @@ public class TamagochiDAO {
     }
    
     
-    public void sumaEnergia(Integer id) throws Exception {
+    public void sumaEnergia(Long id) throws Exception {
         
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -109,7 +109,7 @@ public class TamagochiDAO {
         if(energia==100){
             throw new Exception("La energia esta al 100%");
         }
-        energia += 20;
+        energia += 10;
         tamagochi.setEnergia(energia);
         
         session.save(tamagochi);
@@ -158,7 +158,7 @@ public class TamagochiDAO {
         session.getTransaction().commit();
     }
     
-    public void sleep(Integer id) throws Exception {
+    public void sleep(Long id,boolean sleep) throws Exception {
         
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -168,7 +168,7 @@ public class TamagochiDAO {
             throw new Exception("Tamagochi no existe");
         }
         
-        
+        tamagochi.setDormido(sleep);
         session.save(tamagochi);
         session.getTransaction().commit();
     }
