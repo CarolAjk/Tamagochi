@@ -233,12 +233,14 @@ public class Iniciop extends javax.swing.JFrame {
         lamparapaJLabel = new javax.swing.JLabel();
         comidaDerechaJLabel = new javax.swing.JLabel();
         comidaIzquierdaJLabel = new javax.swing.JLabel();
+        esponjaJLabel = new javax.swing.JLabel();
         sueñoJLabel = new javax.swing.JLabel("", SwingConstants.CENTER);
         bañoJLabel = new javax.swing.JLabel("", SwingConstants.CENTER);
         juegoJLabel = new javax.swing.JLabel("", SwingConstants.CENTER);
         BCOMIDA = new javax.swing.JButton();
         xboxJLabel = new javax.swing.JLabel();
         BDORMIR = new javax.swing.JButton();
+        lamparapiJLabel = new javax.swing.JLabel();
         BBAÑO = new javax.swing.JButton();
         BJUEGOS = new javax.swing.JButton();
         tamagochiJLabel = new javax.swing.JLabel();
@@ -261,13 +263,12 @@ public class Iniciop extends javax.swing.JFrame {
         jPanel2.add(hambreJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 540, 110, 80));
 
         lamparapaJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_lampara.png"))); // NOI18N
-        lamparapaJLabel.setText("jLabel2");
         lamparapaJLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lamparapaJLabelMouseClicked(evt);
             }
         });
-        jPanel2.add(lamparapaJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 420, 410));
+        jPanel2.add(lamparapaJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 280, 120, 250));
 
         comidaDerechaJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_tacos.png"))); // NOI18N
         comidaDerechaJLabel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -285,6 +286,9 @@ public class Iniciop extends javax.swing.JFrame {
         });
         jPanel2.add(comidaIzquierdaJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, 170, 110));
 
+        esponjaJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/esponjab.png"))); // NOI18N
+        jPanel2.add(esponjaJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 400, 130, 130));
+
         sueñoJLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jPanel2.add(sueñoJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 540, 100, 90));
 
@@ -292,7 +296,7 @@ public class Iniciop extends javax.swing.JFrame {
         jPanel2.add(bañoJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 540, 120, 80));
 
         juegoJLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jPanel2.add(juegoJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 550, 120, 80));
+        jPanel2.add(juegoJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 540, 120, 80));
 
         BCOMIDA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BCOMIDA.PNG"))); // NOI18N
         BCOMIDA.addActionListener(new java.awt.event.ActionListener() {
@@ -303,13 +307,12 @@ public class Iniciop extends javax.swing.JFrame {
         jPanel2.add(BCOMIDA, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 610, 80, 80));
 
         xboxJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/xbox.png"))); // NOI18N
-        xboxJLabel.setText("jLabel2");
         xboxJLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 xboxJLabelMouseClicked(evt);
             }
         });
-        jPanel2.add(xboxJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 190, 90));
+        jPanel2.add(xboxJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 400, 160, 170));
 
         BDORMIR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BDORMIR3.PNG"))); // NOI18N
         BDORMIR.addActionListener(new java.awt.event.ActionListener() {
@@ -318,6 +321,9 @@ public class Iniciop extends javax.swing.JFrame {
             }
         });
         jPanel2.add(BDORMIR, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 610, 80, 80));
+
+        lamparapiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pinguino_lampara.png"))); // NOI18N
+        jPanel2.add(lamparapiJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 260, 170, 210));
 
         BBAÑO.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BBAÑO3.PNG"))); // NOI18N
         BBAÑO.addActionListener(new java.awt.event.ActionListener() {
@@ -477,12 +483,14 @@ public class Iniciop extends javax.swing.JFrame {
     private javax.swing.JLabel bañoJLabel;
     private javax.swing.JLabel comidaDerechaJLabel;
     private javax.swing.JLabel comidaIzquierdaJLabel;
+    private javax.swing.JLabel esponjaJLabel;
     private javax.swing.JLabel hambreJLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel juegoJLabel;
     private javax.swing.JLabel lamparapaJLabel;
+    private javax.swing.JLabel lamparapiJLabel;
     private javax.swing.JLabel nombreJLabel;
     private javax.swing.JLabel sueñoJLabel;
     private javax.swing.JLabel tamagochiJLabel;
