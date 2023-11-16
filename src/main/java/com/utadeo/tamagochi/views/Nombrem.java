@@ -66,7 +66,7 @@ public class Nombrem extends javax.swing.JFrame {
         jPanel1.add(nameJTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 300, 410, 60));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/FN_MASCOTA.PNG"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 646, 669));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, 669));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 

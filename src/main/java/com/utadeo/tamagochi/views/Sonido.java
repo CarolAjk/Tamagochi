@@ -31,6 +31,8 @@ public class Sonido extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         BSALIDAS = new javax.swing.JButton();
+        sonidoJLabel = new javax.swing.JLabel();
+        muteJLabel = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -48,8 +50,19 @@ public class Sonido extends javax.swing.JFrame {
         });
         jPanel1.add(BSALIDAS, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 0, 80, 50));
 
+        sonidoJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/sonido.png"))); // NOI18N
+        sonidoJLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sonidoJLabelMouseClicked(evt);
+            }
+        });
+        jPanel1.add(sonidoJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 250, 200, 140));
+
+        muteJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/mute.png"))); // NOI18N
+        jPanel1.add(muteJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 240, -1, -1));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/FMenu.PNG"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 668));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 668));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -68,11 +81,17 @@ public class Sonido extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_BSALIDASActionPerformed
 
+    private void sonidoJLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sonidoJLabelMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sonidoJLabelMouseClicked
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BSALIDAS;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel muteJLabel;
+    private javax.swing.JLabel sonidoJLabel;
     // End of variables declaration//GEN-END:variables
 }

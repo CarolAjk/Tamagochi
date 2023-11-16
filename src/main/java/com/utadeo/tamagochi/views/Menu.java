@@ -54,7 +54,7 @@ public class Menu extends javax.swing.JFrame {
                 BJUGARActionPerformed(evt);
             }
         });
-        jPanel1.add(BJUGAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, 160, 70));
+        jPanel1.add(BJUGAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 150, 160, 70));
 
         BREGLAS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BREGLAS.PNG"))); // NOI18N
         BREGLAS.setText("BREGLAS");
@@ -72,7 +72,7 @@ public class Menu extends javax.swing.JFrame {
                 BSONIDOActionPerformed(evt);
             }
         });
-        jPanel1.add(BSONIDO, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 340, 160, 70));
+        jPanel1.add(BSONIDO, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 350, 160, 70));
 
         BSALIR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BSALIR.PNG"))); // NOI18N
         BSALIR.setText("BSALIR");
@@ -81,10 +81,10 @@ public class Menu extends javax.swing.JFrame {
                 BSALIRActionPerformed(evt);
             }
         });
-        jPanel1.add(BSALIR, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 430, 160, 70));
+        jPanel1.add(BSALIR, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 460, 160, 70));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/FMENUIMA.PNG"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -2, 650, 670));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fm.PNG"))); // NOI18N
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 650, 670));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

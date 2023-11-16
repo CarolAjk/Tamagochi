@@ -317,7 +317,7 @@ public class Iniciop extends javax.swing.JFrame {
                 comidaDerechaJLabelMouseClicked(evt);
             }
         });
-        jPanel2.add(comidaDerechaJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 380, 150, 140));
+        jPanel2.add(comidaDerechaJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 380, 180, 140));
 
         comidaIzquierdaJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_bambu.png"))); // NOI18N
         comidaIzquierdaJLabel.addMouseListener(new java.awt.event.MouseAdapter() {
