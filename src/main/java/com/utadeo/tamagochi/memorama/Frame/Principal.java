@@ -40,7 +40,7 @@ public class Principal extends javax.swing.JFrame {
     
     public Principal() {
         initComponents();
-        this.setTitle("Memory");
+        this.setTitle("Memorama");
         this.setLocationRelativeTo(this);
         u.imgStart();
         
@@ -112,7 +112,9 @@ public class Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("JUEGO");
+        setBackground(new java.awt.Color(0, 0, 0));
         setResizable(false);
+        setType(java.awt.Window.Type.UTILITY);
 
         btn01.setForeground(new java.awt.Color(240, 240, 240));
         btn01.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);

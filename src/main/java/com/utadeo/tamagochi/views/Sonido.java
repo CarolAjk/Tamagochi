@@ -3,7 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.utadeo.tamagochi.views;
+import com.utadeo.tamagochi.database.daos.TamagochiDAO;
+import com.utadeo.tamagochi.database.entities.Tamagochi;
 import java.applet.AudioClip;
+import java.util.List;
 
 /**
  *
@@ -56,9 +59,14 @@ public class Sonido extends javax.swing.JFrame {
                 sonidoJLabelMouseClicked(evt);
             }
         });
-        jPanel1.add(sonidoJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 250, 200, 140));
+        jPanel1.add(sonidoJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 260, 200, 140));
 
         muteJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/mute.png"))); // NOI18N
+        muteJLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                muteJLabelMouseClicked(evt);
+            }
+        });
         jPanel1.add(muteJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 240, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/FMenu.PNG"))); // NOI18N
@@ -82,8 +90,24 @@ public class Sonido extends javax.swing.JFrame {
     }//GEN-LAST:event_BSALIDASActionPerformed
 
     private void sonidoJLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sonidoJLabelMouseClicked
-        // TODO add your handling code here:
+        TamagochiDAO tamagochiDAO = new TamagochiDAO();
+        List<Tamagochi> tamagochis = tamagochiDAO.getAll();
+        if (tamagochis.size()>0){
+            Tamagochi tamagochi = tamagochis.get(0);
+            tamagochi.setMusica(true);
+            tamagochiDAO.update(tamagochi);
+        }
     }//GEN-LAST:event_sonidoJLabelMouseClicked
+
+    private void muteJLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_muteJLabelMouseClicked
+        TamagochiDAO tamagochiDAO = new TamagochiDAO();
+        List<Tamagochi> tamagochis = tamagochiDAO.getAll();
+        if (tamagochis.size()>0){
+            Tamagochi tamagochi = tamagochis.get(0);
+            tamagochi.setMusica(false);
+            tamagochiDAO.update(tamagochi);
+        }
+    }//GEN-LAST:event_muteJLabelMouseClicked
 
 
 

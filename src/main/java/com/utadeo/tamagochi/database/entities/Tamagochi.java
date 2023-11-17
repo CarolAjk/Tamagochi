@@ -26,6 +26,7 @@ public class Tamagochi {
     private Boolean muerte;
     private Integer hambre;
     private Integer energia;
+    private Boolean musica = false;
 
     public Tamagochi() {
         // Constructor por defecto
@@ -105,6 +106,16 @@ public class Tamagochi {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
+
+    public Boolean getMusica() {
+        return musica;
+    }
+
+    public void setMusica(Boolean musica) {
+        this.musica = musica;
+    }
+    
+    
     
     
 }

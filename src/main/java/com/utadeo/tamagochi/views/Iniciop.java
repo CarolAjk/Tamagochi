@@ -10,8 +10,12 @@ import com.utadeo.tamagochi.memorama.Frame.Principal;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.SwingConstants;
 
 /**
@@ -22,13 +26,23 @@ public class Iniciop extends javax.swing.JFrame {
     
     private Long idTamagochi; 
     private Tamagochi tamagochi;
-    private Boolean muerto;
-    private Boolean dormido;
-    
-    private javax.swing.Timer timerEnergia;
-    
+    private Boolean muerto = false;
+    private Boolean dormido = false;
+    private Boolean triste = false;
+    private Boolean feliz = true;
+    private Boolean sucio1 = false;
+    private Boolean sucio2 = false;
+    private Boolean sucio3 = false;
+
     
 
+    private javax.swing.Timer timerEnergia;
+    private javax.swing.Timer timerPorcentajes;
+    private javax.swing.Timer timerBaño;
+    private javax.swing.Timer timerComida;
+    private javax.swing.Timer timerSueño;
+            
+            
     /**
      * Creates new form Iniciop
      */
@@ -84,6 +98,10 @@ public class Iniciop extends javax.swing.JFrame {
             tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pinguino_feliz.PNG"))); // NOI18N
         }
         
+        if(tamagochi.getMusica()){
+            reproducir();
+        }
+        
         ActionListener porcentajesListener = new ActionListener()
         {
             public void actionPerformed(ActionEvent event)
@@ -91,7 +109,7 @@ public class Iniciop extends javax.swing.JFrame {
                loadTamagochiPorcentajes();             
             }
         };
-        javax.swing.Timer timerPorcentajes = new javax.swing.Timer(1000, porcentajesListener);// mil milisegundos
+        timerPorcentajes = new javax.swing.Timer(500, porcentajesListener);// mil milisegundos
         timerPorcentajes.setInitialDelay(0);
         timerPorcentajes.start();
         
@@ -102,7 +120,7 @@ public class Iniciop extends javax.swing.JFrame {
               updateBaño();       
             }
         };
-        javax.swing.Timer timerBaño = new javax.swing.Timer(60000, bañoListener);// mil milisegundos
+        timerBaño = new javax.swing.Timer(10000, bañoListener);// mil milisegundos
         timerBaño.setInitialDelay(0);
         timerBaño.start();
         
@@ -113,7 +131,7 @@ public class Iniciop extends javax.swing.JFrame {
               updateComida();     
             }
         };
-        javax.swing.Timer timerComida = new javax.swing.Timer(60000, comidaListener);// mil milisegundos
+        timerComida = new javax.swing.Timer(60000, comidaListener);// mil milisegundos
         timerComida.setInitialDelay(0);
         timerComida.start();
         
@@ -124,7 +142,7 @@ public class Iniciop extends javax.swing.JFrame {
               updateSueño();     
             }
         };
-        javax.swing.Timer timerSueño = new javax.swing.Timer(60000, sueñoListener);// mil milisegundos
+        timerSueño = new javax.swing.Timer(5000, sueñoListener);// mil milisegundos
         timerSueño.setInitialDelay(0);
         timerSueño.start();  
         
@@ -135,117 +153,226 @@ public class Iniciop extends javax.swing.JFrame {
               updateEnergia();     
             }
         };
-        timerEnergia = new javax.swing.Timer(6000, energiaListener);// mil milisegundos
+        timerEnergia = new javax.swing.Timer(60000, energiaListener);// mil milisegundos
         timerEnergia.setInitialDelay(0);
         timerEnergia.start();
     }
     
-    private void updateEstado(){
-        
-    }
-    
-    private void updateBaño() {
+    private synchronized void updateEstado(){
         final TamagochiDAO tamagochiDAO = new TamagochiDAO();
-        if(tamagochi.getBaño()==0){
+        
+        System.out.println("dormido=" + dormido);
+        System.out.println("muerto=" + muerto );
+        System.out.println("triste=" + triste);
+        System.out.println("feliz=" + feliz);
+        System.out.println("sucio1=" + sucio1);
+        System.out.println("sucio2=" + sucio2);
+        System.out.println("sucio3=" + sucio3);
+        System.out.println("///////////");
+
+        if (muerto){ 
+            
+            timerEnergia.stop();
+            timerPorcentajes.stop();
+            timerBaño.stop();
+            timerComida.stop();
+            timerSueño.stop();
+            
             if (tamagochi.getTipo().compareTo("PA")==0){
                 tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_muerto.PNG"))); // NOI18N
             }else if (tamagochi.getTipo().compareTo("PI")==0){
                 tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pinguino_muerto.PNG"))); // NOI18N
             }
-            
-        }else{
-            
-            tamagochi.setBaño(tamagochi.getBaño()-10);
-            tamagochiDAO.update(tamagochi);
-            
-        } 
-        
-        if(tamagochi.getBaño()==60 || tamagochi.getBaño()==50){
-           if (tamagochi.getTipo().compareTo("PA")==0){
-                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/pa_su_1.PNG"))); // NOI18N
-            }else if (tamagochi.getTipo().compareTo("PI")==0){
-                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pi_su_1.PNG"))); // NOI18N
-            }
-        } else if(tamagochi.getBaño()==40 || tamagochi.getBaño()==30){
+        } else if (dormido && sucio3){
             if (tamagochi.getTipo().compareTo("PA")==0){
-                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/pa_su_2.PNG"))); // NOI18N
+                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/pa3_su_d.PNG"))); // NOI18N
             }else if (tamagochi.getTipo().compareTo("PI")==0){
-                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pi_su_2.PNG"))); // NOI18N
+                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pi3_su_d.PNG"))); // NOI18N
             }
-        } else if(tamagochi.getBaño()==20 || tamagochi.getBaño()==10 ){
+        } else if (dormido && sucio2){
+            if (tamagochi.getTipo().compareTo("PA")==0){
+                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/pa2_su_d.PNG"))); // NOI18N
+            }else if (tamagochi.getTipo().compareTo("PI")==0){
+                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pi2_su_d.PNG"))); // NOI18N
+            }
+        } else if (dormido && sucio1){
+            if (tamagochi.getTipo().compareTo("PA")==0){
+                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/pa1_su_d.PNG"))); // NOI18N
+            }else if (tamagochi.getTipo().compareTo("PI")==0){
+                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pi1_su_d.PNG"))); // NOI18N
+            }
+        } else if (feliz && sucio3){
             if (tamagochi.getTipo().compareTo("PA")==0){
                 tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/pa_su_3.PNG"))); // NOI18N
             }else if (tamagochi.getTipo().compareTo("PI")==0){
                 tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pi_su_3.PNG"))); // NOI18N
             }
-        } else {
-           if (tamagochi.getTipo().compareTo("PA")==0){
+        } else if(feliz && sucio2 ){
+            if (tamagochi.getTipo().compareTo("PA")==0){
+                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/pa_su_2.PNG"))); // NOI18N
+            }else if (tamagochi.getTipo().compareTo("PI")==0){
+                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pi_su_2.PNG"))); // NOI18N
+            }
+        } else if (feliz && sucio1){
+            if (tamagochi.getTipo().compareTo("PA")==0){
+                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/pa_su_1.PNG"))); // NOI18N
+            }else if (tamagochi.getTipo().compareTo("PI")==0){
+                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pi_su_1.PNG"))); // NOI18N
+            }
+        }  else if (triste && sucio3){
+            if (tamagochi.getTipo().compareTo("PA")==0){
+                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/pa3_su_t.PNG"))); // NOI18N
+            }else if (tamagochi.getTipo().compareTo("PI")==0){
+                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pi3_su_t.PNG"))); // NOI18N
+            }
+        } else if (triste && sucio2){
+            if (tamagochi.getTipo().compareTo("PA")==0){
+                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/pa2_su_t.PNG"))); // NOI18N
+            }else if (tamagochi.getTipo().compareTo("PI")==0){
+                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pi2_su_t.PNG"))); // NOI18N
+            }
+        }else if (triste && sucio1){
+            if (tamagochi.getTipo().compareTo("PA")==0){
+                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/pa1_su_t.PNG"))); // NOI18N
+            }else if (tamagochi.getTipo().compareTo("PI")==0){
+                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pi1_su_t.PNG"))); // NOI18N
+            }
+        }  else if(dormido){
+            if (tamagochi.getTipo().compareTo("PA")==0){
+                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_dormir.PNG"))); // NOI18N
+            }else if (tamagochi.getTipo().compareTo("PI")==0){
+                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pinguino_dormir.PNG"))); // NOI18N
+            }
+        } else if(feliz){
+            if (tamagochi.getTipo().compareTo("PA")==0){
                 tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_feliz.PNG"))); // NOI18N
             }else if (tamagochi.getTipo().compareTo("PI")==0){
                 tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pinguino_feliz.PNG"))); // NOI18N
-            } 
+            }
+        } else if(triste){
+            if (tamagochi.getTipo().compareTo("PA")==0){
+                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_triste.PNG"))); // NOI18N
+            }else if (tamagochi.getTipo().compareTo("PI")==0){
+                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pinguino_triste.PNG"))); // NOI18N
+            }
         }
+       
         
         
+    }
+    
+    public void reproducir() {
+        try{
+            String archivo = null;
+            if (tamagochi.getTipo().compareTo("PA")==0){
+                archivo = "/images/panda/sonidow.wav";
+            }else if (tamagochi.getTipo().compareTo("PI")==0){
+                archivo = "/images/pinguino/sonidow.wav";
+            }
+            AudioInputStream audioInputStream =
+                AudioSystem.getAudioInputStream(
+                    this.getClass().getResource(archivo));
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        }
+            catch(Exception ex)
+            {
+                ex.printStackTrace();
+            }
+    }
+    
+    private void updateBaño() {
+        final TamagochiDAO tamagochiDAO = new TamagochiDAO();
+        if(tamagochi.getBaño()==0){
+            muerto = true;
+        } else {
+            
+            tamagochi.setBaño(tamagochi.getBaño()-10);
+            tamagochiDAO.update(tamagochi);
+            
+            sucio1 = false;
+            sucio2 = false;
+            sucio3 = false;
+
+            if(tamagochi.getBaño()==60 || tamagochi.getBaño()==50){
+                sucio1 = true;       
+            } else if(tamagochi.getBaño()==40 || tamagochi.getBaño()==30){
+                sucio2 = true;
+            } else if(tamagochi.getBaño()==20 || tamagochi.getBaño()==10 ){
+                sucio3 = true;
+           } 
+
+            tristesa(); 
+        } 
+
+        updateEstado();
     }
     
     private void updateEnergia() {
         final TamagochiDAO tamagochiDAO = new TamagochiDAO();
         if(tamagochi.getEnergia()==0){
-            if (tamagochi.getTipo().compareTo("PA")==0){
-               tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_muerto.PNG"))); // NOI18N
-            }else if (tamagochi.getTipo().compareTo("PI")==0){
-                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pinguino_muerto.PNG"))); // NOI18N
-            }
-           
-        }else{
-            
+            muerto = true;  
+        } else {
             tamagochi.setEnergia(tamagochi.getEnergia()-10);
             tamagochiDAO.update(tamagochi);
             
+            tristesa();
         }
+
+        updateEstado();
     }
     
     private void updateSueño() {
         final TamagochiDAO tamagochiDAO = new TamagochiDAO();
         tamagochi = tamagochiDAO.read(idTamagochi);
-        if (tamagochi.getDormido()){
-            if (tamagochi.getSueño()==100){
-            } else {
+        if (tamagochi.getDormido()){ 
+            if (tamagochi.getSueño()<100){
                 tamagochi.setSueño(tamagochi.getSueño()+10);
                 tamagochiDAO.update(tamagochi);
-              
+                
+                tristesa();
             }
         } else {
           if(tamagochi.getSueño()==0){
-              if (tamagochi.getTipo().compareTo("PA")==0){
-                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_muerto.PNG"))); // NOI18N
-            }else if (tamagochi.getTipo().compareTo("PI")==0){
-                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pinguino_muerto.PNG"))); // NOI18N
-            }
-            
+              muerto = true;
           } else{
             tamagochi.setSueño(tamagochi.getSueño()-10);
             tamagochiDAO.update(tamagochi);
+            
+            tristesa();
           }  
         }
+        
+        updateEstado();
     }
    
     
     private void updateComida() {
         final TamagochiDAO tamagochiDAO = new TamagochiDAO();
         if(tamagochi.getHambre()==0){
-            if (tamagochi.getTipo().compareTo("PA")==0){
-               tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_muerto.PNG"))); // NOI18N
-            }else if (tamagochi.getTipo().compareTo("PI")==0){
-               tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pinguino_muerto.PNG"))); // NOI18N
-            }
-            
+            muerto = true; 
         }else{
-            
             tamagochi.setHambre(tamagochi.getHambre()-10);
-            tamagochiDAO.update(tamagochi);
+            tamagochiDAO.update(tamagochi); 
             
+            tristesa();
+        }
+        
+        updateEstado();
+    }
+    
+    private void tristesa(){
+        
+        if (tamagochi.getHambre()>= 0 && tamagochi.getHambre() <= 20 ||
+                tamagochi.getSueño()>= 0 && tamagochi.getSueño() <= 20 ||
+                tamagochi.getEnergia()>= 0 && tamagochi.getEnergia() <= 20 ||
+                tamagochi.getBaño()>= 0 && tamagochi.getBaño() <= 20){
+            triste = true;
+            feliz = false;
+        } else {
+            triste = false;
+            feliz = true;
         }
     }
     
@@ -476,74 +603,109 @@ public class Iniciop extends javax.swing.JFrame {
 
     private void comidaDerechaJLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comidaDerechaJLabelMouseClicked
 
-        TamagochiDAO tamagochiDAO = new TamagochiDAO();
-        try {
-            tamagochiDAO.feed(this.idTamagochi);
-        } catch (Exception ex) {
-            Logger.getLogger(Iniciop.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        if(!muerto){
+            TamagochiDAO tamagochiDAO = new TamagochiDAO();
+            try {
+                tamagochiDAO.feed(this.idTamagochi);
+            } catch (Exception ex) {
+                Logger.getLogger(Iniciop.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } 
     }//GEN-LAST:event_comidaDerechaJLabelMouseClicked
 
     private void comidaIzquierdaJLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comidaIzquierdaJLabelMouseClicked
-    TamagochiDAO tamagochiDAO = new TamagochiDAO();
-        try {
-            tamagochiDAO.feed(this.idTamagochi);
-        } catch (Exception ex) {
-            Logger.getLogger(Iniciop.class.getName()).log(Level.SEVERE, null, ex);
-        }
+     
+        if(!muerto){
+            TamagochiDAO tamagochiDAO = new TamagochiDAO();
+            try {
+                tamagochiDAO.feed(this.idTamagochi);
+            } catch (Exception ex) {
+                Logger.getLogger(Iniciop.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } 
     }//GEN-LAST:event_comidaIzquierdaJLabelMouseClicked
 
     private void lamparapaJLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lamparapaJLabelMouseClicked
-       TamagochiDAO tamagochiDAO = new TamagochiDAO();
-        try {
-            if (tamagochi.getDormido()){
-                tamagochiDAO.sleep(this.idTamagochi,false);
-                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_feliz.PNG"))); // NOI18N
-                 
-            } else {
-                tamagochiDAO.sleep(this.idTamagochi,true);
-                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/panda/panda_dormir.PNG"))); // NOI18N
+       
+        if(!muerto){
+            TamagochiDAO tamagochiDAO = new TamagochiDAO();
+            try {
+                if (tamagochi.getDormido()){
+                    tamagochiDAO.sleep(this.idTamagochi,false);
+                    dormido = false;
+                    feliz = true;
+                } else {
+                    tamagochiDAO.sleep(this.idTamagochi,true);
+                    dormido = true;
+                    feliz = false;
+                }
+                
+                updateEstado();
+
+            } catch (Exception ex) {
+                Logger.getLogger(Iniciop.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-        } catch (Exception ex) {
-            Logger.getLogger(Iniciop.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }     
     }//GEN-LAST:event_lamparapaJLabelMouseClicked
 
     private void xboxJLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_xboxJLabelMouseClicked
-        Principal principal = new Principal();
-        principal.setIdTamagochi(this.idTamagochi);
-        principal.setTimerEnergia(timerEnergia);
-        principal.setVisible(true); 
         
-        timerEnergia.stop();
+        if(!muerto){
+            Principal principal = new Principal();
+            principal.setIdTamagochi(this.idTamagochi);
+            principal.setTimerEnergia(timerEnergia);
+            principal.setVisible(true); 
+        
+            timerEnergia.stop();
+        }
     }//GEN-LAST:event_xboxJLabelMouseClicked
 
     private void lamparapiJLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lamparapiJLabelMouseClicked
-        TamagochiDAO tamagochiDAO = new TamagochiDAO();
-        try {
-            if (tamagochi.getDormido()){
-                tamagochiDAO.sleep(this.idTamagochi,false);
-                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pinguino_feliz.PNG"))); // NOI18N
-                 
-            } else {
-                tamagochiDAO.sleep(this.idTamagochi,true);
-                tamagochiJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinguino/pinguino_dormir.PNG"))); // NOI18N
-                 
+        
+        if(!muerto){
+            TamagochiDAO tamagochiDAO = new TamagochiDAO();
+            try {
+                if (tamagochi.getDormido()){
+                    tamagochiDAO.sleep(this.idTamagochi,false);
+                    dormido = false;
+                    feliz = true;
+                } else {
+                    tamagochiDAO.sleep(this.idTamagochi,true);
+                    dormido = true;
+                    feliz = false;
+                }
+                
+                updateEstado();
+
+            } catch (Exception ex) {
+                Logger.getLogger(Iniciop.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-        } catch (Exception ex) {
-            Logger.getLogger(Iniciop.class.getName()).log(Level.SEVERE, null, ex);
-        }         
+        }             
     }//GEN-LAST:event_lamparapiJLabelMouseClicked
 
     private void esponjaJLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_esponjaJLabelMouseClicked
-        final TamagochiDAO tamagochiDAO = new TamagochiDAO();
-        if(tamagochi.getBaño()!=100){
-            tamagochi.setBaño(tamagochi.getBaño()+10);
-            tamagochiDAO.update(tamagochi);
-        }
+        
+        if(!muerto){
+           final TamagochiDAO tamagochiDAO = new TamagochiDAO();
+            if(tamagochi.getBaño()!=100){
+                tamagochi.setBaño(tamagochi.getBaño()+10);
+                tamagochiDAO.update(tamagochi);
+            } 
+            
+            sucio1 = false;
+            sucio2 = false;
+            sucio3 = false;
+        
+            if(tamagochi.getBaño()==60 || tamagochi.getBaño()==50){
+                sucio1 = true;       
+            } else if(tamagochi.getBaño()==40 || tamagochi.getBaño()==30){
+                sucio2 = true;
+            } else if(tamagochi.getBaño()==20 || tamagochi.getBaño()==10 ){
+                sucio3 = true;
+           } 
+        
+            updateEstado();
+        }    
     }//GEN-LAST:event_esponjaJLabelMouseClicked
 
     public void setIdTamagochi(Long idTamagochi) {

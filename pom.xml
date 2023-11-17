@@ -76,6 +76,8 @@
                <artifactId>AbsoluteLayout</artifactId>
                <version>RELEASE190</version>
           </dependency>
+          
+
      </dependencies>
      
 </project>

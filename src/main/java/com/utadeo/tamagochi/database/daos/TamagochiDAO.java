@@ -149,7 +149,7 @@ public class TamagochiDAO {
         
         int hambre = tamagochi.getHambre();
         if(hambre==100){
-            throw new Exception("No tiene hambre");
+            return; 
         }
         hambre += 10;
         tamagochi.setHambre(hambre);
